@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "808262353334",
+    "project_id": "solutions-sol",
+    "storage_bucket": "solutions-sol.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:808262353334:android:c86316333f633b2c8d8117",
+        "android_client_info": {
+          "package_name": "com.example.solution_sol_task"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "808262353334-e4f12kvt5jj3655bhfuakclm6t5ib43o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4Tkbf4nzH6l4jRJtXAM7hIMtcL1oQU4A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "808262353334-e4f12kvt5jj3655bhfuakclm6t5ib43o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
