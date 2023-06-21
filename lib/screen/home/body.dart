@@ -43,6 +43,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                               builder: (context) => ViewScreen(
                                   title: detailModel.title.toString(),
                                   author: detailModel.author.toString(),
+                                  uid: detailModel.uid.toString(),
                                   image: detailModel.image.toString()))),
                       leading: CircleAvatar(
                           backgroundImage: NetworkImage(detailModel.image!)),

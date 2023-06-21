@@ -19,11 +19,13 @@ class HomeScreen extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) {
-                      return const LogInScreen();
-                    },
-                  ));
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LogInScreen(),
+                    ),
+                  );
                 },
                 icon: const Icon(Icons.logout))
           ]),
