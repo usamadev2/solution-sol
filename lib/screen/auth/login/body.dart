@@ -1,15 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:solution_sol_task/controller/auth_provider.dart';
 import 'package:solution_sol_task/screen/auth/sign_up/sign_up.dart';
-import 'package:solution_sol_task/screen/home/home.dart';
 import 'package:solution_sol_task/utils/widget/extention.dart';
 
 import '../../../../utils/widget/custom_button.dart';
 import '../../../../utils/widget/custom_text.dart';
 import '../../../utils/constant/color.dart';
 import '../../../utils/widget/custom_text_field.dart';
-import '../../../utils/widget/dialog.dart';
 
 class LoginBody extends StatefulWidget {
   const LoginBody({super.key});
@@ -19,25 +18,9 @@ class LoginBody extends StatefulWidget {
 }
 
 class _LoginBodyState extends State<LoginBody> {
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: true);
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: SingleChildScrollView(
@@ -58,17 +41,17 @@ class _LoginBodyState extends State<LoginBody> {
             24.0.spaceY,
             CustomTextField(
               hintText: 'Email address',
-              textEditingController: emailController,
+              textEditingController: authProvider.emailController,
             ),
             10.0.spaceY,
             CustomTextField(
               hintText: 'Password',
-              textEditingController: passwordController,
+              textEditingController: authProvider.passwordController,
             ),
             25.0.spaceY,
             CustomButton(
               onPressed: () {
-                checkValues();
+                authProvider.logIn(context);
               },
               text: 'LoG in',
               width: double.infinity,
@@ -106,40 +89,5 @@ class _LoginBodyState extends State<LoginBody> {
         ),
       ),
     );
-  }
-
-  void checkValues() {
-    String email = emailController.text.trim();
-    String password = passwordController.text.trim();
-
-    if (email == "" || password == "") {
-      UIHelper.showAlertDialog(
-          context, "Incomplete Data", "Please fill all the fields");
-    } else {
-      logIn(email, password);
-    }
-  }
-
-  void logIn(String email, String password) async {
-    UIHelper.showLoadingDialog(context, "Logging In..");
-
-    try {
-      await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      if (!mounted) return;
-      Navigator.popUntil(context, (route) => route.isFirst);
-      Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ));
-    } on FirebaseAuthException catch (ex) {
-      // Close the loading dialog
-      Navigator.pop(context);
-
-      // Show Alert Dialog
-      UIHelper.showAlertDialog(
-          context, "An error occured", ex.message.toString());
-    }
   }
 }

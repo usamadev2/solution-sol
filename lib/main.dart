@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
+import 'package:solution_sol_task/controller/auth_provider.dart';
+import 'package:solution_sol_task/controller/detail_provider.dart';
 import 'package:solution_sol_task/screen/auth/login/login.dart';
 import 'package:solution_sol_task/screen/home/home.dart';
 import 'package:uuid/uuid.dart';
@@ -12,7 +15,19 @@ var uuid = const Uuid();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider<DetailProvider>(
+          create: (context) => DetailProvider(),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:solution_sol_task/controller/detail_provider.dart';
 import 'package:solution_sol_task/models/detail_model.dart';
 import 'package:solution_sol_task/utils/constant/color.dart';
 
@@ -16,6 +18,8 @@ class HomeScreenBody extends StatefulWidget {
 class _HomeScreenBodyState extends State<HomeScreenBody> {
   @override
   Widget build(BuildContext context) {
+    final detailProvider = Provider.of<DetailProvider>(context, listen: true);
+
     return Center(
       child: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -51,12 +55,7 @@ class _HomeScreenBodyState extends State<HomeScreenBody> {
                       subtitle: Text(detailModel.author.toString()),
                       trailing: IconButton(
                           onPressed: () {
-                            FirebaseFirestore.instance
-                                .collection('users')
-                                .doc(FirebaseAuth.instance.currentUser!.uid)
-                                .collection('Collections')
-                                .doc(detailModel.uid)
-                                .delete();
+                            detailProvider.deleteDetails(detailModel.uid!);
                           },
                           icon: const Icon(Icons.delete)),
                     ),

@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:solution_sol_task/screen/auth/login/login.dart';
+import 'package:provider/provider.dart';
 
+import '../../controller/auth_provider.dart';
 import '../../utils/constant/color.dart';
 import '../add_book/add_book_screen.dart';
 import 'body.dart';
@@ -11,6 +11,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
           backgroundColor: AppColors.splashBackground,
@@ -18,14 +19,7 @@ class HomeScreen extends StatelessWidget {
           actions: [
             IconButton(
                 onPressed: () {
-                  FirebaseAuth.instance.signOut();
-                  Navigator.popUntil(context, (route) => route.isFirst);
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const LogInScreen(),
-                    ),
-                  );
+                  authProvider.logOut(context);
                 },
                 icon: const Icon(Icons.logout))
           ]),

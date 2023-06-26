@@ -116,11 +116,9 @@ class _AddBookScreenState extends State<AddBookScreen> {
   void upLoading(BuildContext context) async {
     String title = titleController.text.trim();
     String author = authorController.text.trim();
-    titleController.clear();
-    authorController.clear();
 
     if (title.isEmpty || author.isEmpty || imageFile == null) {
-      log('Fill all the field');
+      UIHelper.showAlertDialog(context, '', 'Fill all the Field');
     } else {
       try {
         UIHelper.showLoadingDialog(context, "UpLoading..");
@@ -160,6 +158,8 @@ class _AddBookScreenState extends State<AddBookScreen> {
           if (!mounted) return;
           Navigator.pop(context);
           Navigator.pop(context);
+          titleController.clear();
+          authorController.clear();
           log('add detail');
         }
       } on FirebaseAuthException catch (ex) {
